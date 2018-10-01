@@ -37,11 +37,24 @@
                 var page = "";
                 var questions = result["results"]
                 for(var i = 0; i < questions.length; i++){
-                    page += '<div class="row"><div class="col"><h4>'+questions[i].question+'</h4><ul><li><button class="btn btn-primary">True</button></li><li><button class="btn btn-primary">False</button></li></ul></div></div>'
+                    page += '<div class="row"><div class="col"><h4>'+questions[i].question+'</h4><ul id='+i+'><li><button class="btn btn-primary">True</button></li><li><button class="btn btn-primary">False</button></li></ul></div></div>'
                 }
                 document.getElementById("body").innerHTML = page
                 $(".btn").click(function(){
-                    console.log("CLICK");
+                    let list = $(this).parent().parent()
+                    let id = list.attr('id');
+                    console.log(id);
+                    let user_ans = this.innerHTML
+                    console.log(user_ans);
+                    if (user_ans == questions[id].correct_answer){
+                        list.css( "background", "green" );
+                        this.innerHTML += "!"
+                    }
+                    else {
+                        list.css( "background", "red" );
+                        this.innerHTML += " X"
+                    }
+
                 });
             }, function(err){
                 console.log(err);
@@ -53,14 +66,6 @@
 
 </head>
 <body id="body">
-    <div class="row">
-        <div class="col">
-            <h4>'+questions[i].question+'</h4>
-            <ul>
-                <li><button class="btn btn-primary">True</button></li>
-                <li><button class="btn btn-primary">False</button></li>
-            </ul>
-        </div>
-    </div>
+
 </body>
 </html>
